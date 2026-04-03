@@ -8,9 +8,9 @@ void setup(){
 void loop(){
   //Look at the serial monitor
   if (digitalRead(ruptPin)==LOW) {
-    Serial.println("Interrupt!");
+    Serial.println("遮断されました");
   } else {
-    Serial.println("...");
+    Serial.println("正常に作動しています");
   }
   delay(500);
 }
