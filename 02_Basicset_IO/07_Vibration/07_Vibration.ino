@@ -6,7 +6,11 @@ void setup() {
 
 void loop() {
   digitalWrite(vibPin, HIGH);
-  delay(1000);
+  delay(500);
   digitalWrite(vibPin, LOW);
-  delay(1000);
+  delay(500);
+  digitalWrite(vibPin, HIGH);
+  delay(200);
+  digitalWrite(vibPin, LOW);
+  delay(200);
 }
