@@ -13,8 +13,8 @@ void loop() {
   float Temperature = DHT.getTemperature();
   float Humidity = DHT.getHumidity();
   //Look at the serial monitor
-  Serial.print(String(Temperature) + "℃");
+  Serial.print("温度" + String(Temperature) + "℃");
   Serial.print(" / ");
-  Serial.println(String(Humidity) + "％");
+  Serial.println("湿度" + String(Humidity) + "％");
   delay(500);
 }
