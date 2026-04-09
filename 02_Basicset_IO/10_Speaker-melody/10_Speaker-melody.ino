@@ -1,112 +1,60 @@
-const int spkrPin = 3; //3:ConnectorA 4:ConnectorB
+const int spkrPin = 3; // 3:ConnectorA 4:ConnectorB
 
-#define BEAT 230
+//きらきら星
+
+// 音階の周波数定義
 #define DO 261.6
-#define _DO 277.18
 #define RE 293.665
-#define _RE 311.127
 #define MI 329.63
 #define FA 349.228
-#define _FA 369.994
 #define SO 391.995
-#define _SO 415.305
 #define RA 440
-#define _RA 466.164
 #define TI 493.883
 #define octDO 523.251
 
-void doremi(){
-  ledcWriteTone(spkrPin, DO);
-  delay(250);
-  ledcWriteTone(spkrPin, RE);
-  delay(250);
-  ledcWriteTone(spkrPin, MI);
-  delay(250);
-  ledcWriteTone(spkrPin, FA);
-  delay(250);
-  ledcWriteTone(spkrPin, SO);
-  delay(250);
-  ledcWriteTone(spkrPin, RA);
-  delay(250);
-  ledcWriteTone(spkrPin, TI);
-  delay(250);
-  ledcWriteTone(spkrPin, octDO);
-  delay(250);
-  ledcWriteTone(spkrPin, 0); // no sound
-  delay(250);
-}
+// メロディの配列（きらきら星）
+float melody[] = {
+  DO, DO, SO, SO, RA, RA, SO, // ドドソソララソ〜
+  FA, FA, MI, MI, RE, RE, DO, // ファファミミレレド〜
+  SO, SO, FA, FA, MI, MI, RE, // ソソファファミミレ〜c:\Users\user68\Desktop\10_Speaker-melody2\09_Speaker_2.ino
+  SO, SO, FA, FA, MI, MI, RE, // ソソファファミミレ〜
+  DO, DO, SO, SO, RA, RA, SO, // ドドソソララソ〜
+  FA, FA, MI, MI, RE, RE, DO  // ファファミミレレド〜
+};
 
-void melodychime(){
-  ledcWriteTone(spkrPin, RA);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, FA);
-  delay(BEAT);  
-  ledcWriteTone(spkrPin, DO);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, FA);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, SO);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, octDO);
-  delay(BEAT * 2);  
-  ledcWriteTone(spkrPin, DO);
-  delay(BEAT);  
-  ledcWriteTone(spkrPin, SO);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, RA);
-  delay(BEAT);  
-  ledcWriteTone(spkrPin, SO);
-  delay(BEAT);  
-  ledcWriteTone(spkrPin, DO);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, FA);
-  delay(BEAT * 3);
-  ledcWriteTone(spkrPin, 0);
-  delay(BEAT);
-}
+// 音の長さの定義 (ms)
+const int noteDuration = 400; // 1音の長さ
+const int pauseBetweenNotes = 50; // 音と音の間のわずかな休止
 
-void fryer(){
-  ledcWriteTone(spkrPin, SO);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, FA);
-  delay(BEAT);  
-  ledcWriteTone(spkrPin, SO);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, 0);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, SO);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, FA);
-  delay(BEAT);  
-  ledcWriteTone(spkrPin, SO);
-  delay(BEAT);  
-  ledcWriteTone(spkrPin, 0);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, SO);
-  delay(BEAT);  
-  ledcWriteTone(spkrPin, FA);
-  delay(BEAT);  
-  ledcWriteTone(spkrPin, SO);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, 0);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, SO);
-  delay(BEAT);  
-  ledcWriteTone(spkrPin, FA);
-  delay(BEAT);  
-  ledcWriteTone(spkrPin, SO);
-  delay(BEAT);
-  ledcWriteTone(spkrPin, 0);
-  delay(BEAT);
+void playmusic() {
+  // 配列の要素数分だけループして再生
+  int totalNotes = sizeof(melody) / sizeof(melody[0]);
+
+  for (int i = 0; i < totalNotes; i++) {
+    ledcWriteTone(spkrPin, melody[i]);
+    
+    // 7番目（フレーズの区切り）は少し長めに伸ばす演出
+    if ((i + 1) % 7 == 0) {
+      delay(noteDuration * 2); 
+    } else {
+      delay(noteDuration);
+    }
+
+    // 音が繋がって聞こえないよう、一瞬音を止める
+    ledcWriteTone(spkrPin, 0);
+    delay(pauseBetweenNotes);
+  }
 }
 
 void setup() {
   pinMode(spkrPin, OUTPUT);
-  ledcAttach(spkrPin, 12000, 8); //Pin setting(Pin num, Max frequency, Resolution)
+  // ESP32のLEDC設定（ピン番号, 周波数, 解像度）
+  ledcAttach(spkrPin, 12000, 8);
 }
 
 void loop() {
-  doremi();
-  melodychime();
-  fryer();
+  playmusic();
+  
+  // 1曲終わったら5秒待機
+  delay(5000);
 }
