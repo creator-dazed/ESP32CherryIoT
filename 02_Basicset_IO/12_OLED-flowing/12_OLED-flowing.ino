@@ -23,12 +23,13 @@ void setup()
 
 void loop()
 {
-  for(int i=0; i<128; i++){
+  for(int i=0; i<64; i++){
     display.clearDisplay();
 
     display.setTextSize(2);
     display.setTextColor(SSD1306_WHITE);
-    display.setCursor(i, 25);
+    display.setCursor(15, i); //上から下
+    // display.setCursor(i, 25); //左から右
     display.print(F("CherryIoT"));
 
     display.display();
