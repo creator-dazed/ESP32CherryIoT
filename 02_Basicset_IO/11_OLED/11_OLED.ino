@@ -19,18 +19,29 @@ void setup()
 
   display.clearDisplay();
 
-  display.setTextSize(2);
+  display.setTextSize(3);
   display.setTextColor(SSD1306_WHITE);
   display.setCursor(0, 5);
-  display.print(F("Hello"));
-  display.setCursor(0, 25);
-  display.print(F("ESP32"));
-  display.setCursor(0, 45);
-  display.print(F("CherryIoT"));
+  display.print(F("HELLO!"));
+  display.setCursor(0, 40);
+  display.print(F("WELCOME"));
+  display.setCursor(0, 65);
+  display.print(F("JUNICHI"));
+  display.startscrollright(0x00, 0x0F); //左から右
+// display.startscrolldiagleft(0x0A, 0x0F); //右下から左上
 
   display.display();
 }
 
+// デフォルト
 void loop()
 {
 }
+
+// void loop()
+// {
+//   display.invertDisplay(true);  // 色を反転
+//   delay(500);
+//   display.invertDisplay(false); // 元に戻す
+//   delay(500);
+// }
