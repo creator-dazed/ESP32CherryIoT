@@ -38,7 +38,7 @@ void loop() {
       digitalWrite(motorPin, LOW); 
       delay(2000);
       } 
-      
+
       //モーターの停止 
       delay(100);
   }

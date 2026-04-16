@@ -32,7 +32,8 @@ void loop() {
   Serial.println(Distance);
  
 if (Distance < 20){
-    for(angle; angle <= 180; angle++) {                        
+  
+  for(angle; angle <= 180; angle++) {                        
     myservo.write(angle);
     delay(20);
   }
@@ -42,7 +43,8 @@ if (Distance < 20){
   for(angle; angle >= 0; angle--) {                 
     myservo.write(angle);  
     delay(20);
-}
-  delay(300);
-}
-}
+    } 
+    
+    delay(300); 
+    } 
+  }
